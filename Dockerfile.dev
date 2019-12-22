@@ -1,0 +1,17 @@
+From node:alpine as builder
+
+WORKDIR '/app'
+
+COPY package.json .
+run npm install
+
+copy . .
+
+CMD npm run build
+
+
+
+
+From nginx as deploy
+
+COPY --from=builder /app/build /usr/share/nginx/html/

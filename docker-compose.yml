@@ -1,0 +1,21 @@
+version: '3'
+services:
+  node-app:
+    restart: always
+    image: muditjain43:npm-project1
+    volumes:
+      - /app/node_modules
+      - .:/app
+    ports:
+      - "1002:3000"
+  # tests:
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - /app/node_modules
+  #     - .:/app
+  #   image: muditjain43:npm-project1
+  #   command: ["npm", "run", "test"]
+
