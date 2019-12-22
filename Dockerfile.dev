@@ -8,7 +8,6 @@ run npm install
 copy . .
 
 CMD npm run build
-###
 
 
 From nginx as deploy
