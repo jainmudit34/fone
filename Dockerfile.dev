@@ -10,6 +10,6 @@ copy . .
 CMD npm run build
 
 
-From nginx as deploy
+From nginx
 
 COPY --from=builder /app/build /usr/share/nginx/html/
