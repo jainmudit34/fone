@@ -6,10 +6,11 @@ COPY package.json .
 run npm install
 
 copy . .
-
 cmd npm run build
 
+cmd ls -la
 
 From nginx
+cmd ls -la
 
 COPY --from=builder /app/build/ /usr/share/nginx/html/
