@@ -11,4 +11,4 @@ cmd npm run build
 
 From nginx
 EXPOSE 3000
-COPY --from=builder /build/ ./usr/share/nginx/html/
+COPY --from=builder /app/ ./usr/share/nginx/html/
