@@ -1,21 +1,57 @@
 version: '3'
 services:
-  node-app:
+  postgres:
+    image: 'postgres:latest'
+    restart: 'always'
+    ports:
+      - "5432:5432"
+  redis:
+    image: 'redis:latest'
     restart: always
-    image: muditjain43:npm-project1
+    ports:
+      - "6379:6379"
+  api:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
     volumes:
       - /app/node_modules
-      - .:/app
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+       - /app/node_modules
+       - ./client:/app
+    restart: always
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.dev
+    volumes:
+       - /app/node_modules
+       - ./worker:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    restart: always
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
     ports:
-      - "1002:3000"
-  # tests:
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - /app/node_modules
-  #     - .:/app
-  #   image: muditjain43:npm-project1
-  #   command: ["npm", "run", "test"]
+      - "3080:80"
+
+
 
